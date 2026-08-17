@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as MenyuRouteImport } from './routes/menyu'
+import { Route as SavatRouteImport } from './routes/savat'
 import { Route as TaomIdRouteImport } from './routes/taom.$id'
 
 const IndexRoute = IndexRouteImport.update({
@@ -23,6 +24,11 @@ const MenyuRoute = MenyuRouteImport.update({
   path: '/menyu',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SavatRoute = SavatRouteImport.update({
+  id: '/savat',
+  path: '/savat',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TaomIdRoute = TaomIdRouteImport.update({
   id: '/taom/$id',
   path: '/taom/$id',
@@ -32,30 +38,34 @@ const TaomIdRoute = TaomIdRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/menyu': typeof MenyuRoute
+  '/savat': typeof SavatRoute
   '/taom/$id': typeof TaomIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/menyu': typeof MenyuRoute
+  '/savat': typeof SavatRoute
   '/taom/$id': typeof TaomIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/menyu': typeof MenyuRoute
+  '/savat': typeof SavatRoute
   '/taom/$id': typeof TaomIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/menyu' | '/taom/$id'
+  fullPaths: '/' | '/menyu' | '/savat' | '/taom/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/menyu' | '/taom/$id'
-  id: '__root__' | '/' | '/menyu' | '/taom/$id'
+  to: '/' | '/menyu' | '/savat' | '/taom/$id'
+  id: '__root__' | '/' | '/menyu' | '/savat' | '/taom/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   MenyuRoute: typeof MenyuRoute
+  SavatRoute: typeof SavatRoute
   TaomIdRoute: typeof TaomIdRoute
 }
 
@@ -75,6 +85,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MenyuRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/savat': {
+      id: '/savat'
+      path: '/savat'
+      fullPath: '/savat'
+      preLoaderRoute: typeof SavatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/taom/$id': {
       id: '/taom/$id'
       path: '/taom/$id'
@@ -88,6 +105,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   MenyuRoute: MenyuRoute,
+  SavatRoute: SavatRoute,
   TaomIdRoute: TaomIdRoute,
 }
 export const routeTree = rootRouteImport
