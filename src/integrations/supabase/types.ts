@@ -14,16 +14,221 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      dishes: {
+        Row: {
+          category: string
+          created_at: string
+          description: string
+          id: string
+          image_url: string | null
+          ingredients: string[]
+          is_popular: boolean
+          price: number
+          title: string
+        }
+        Insert: {
+          category?: string
+          created_at?: string
+          description?: string
+          id?: string
+          image_url?: string | null
+          ingredients?: string[]
+          is_popular?: boolean
+          price?: number
+          title: string
+        }
+        Update: {
+          category?: string
+          created_at?: string
+          description?: string
+          id?: string
+          image_url?: string | null
+          ingredients?: string[]
+          is_popular?: boolean
+          price?: number
+          title?: string
+        }
+        Relationships: []
+      }
+      orders: {
+        Row: {
+          address: string
+          created_at: string
+          customer_name: string
+          discount: number
+          id: string
+          items: Json
+          note: string | null
+          payment_method: string
+          phone: string
+          promo_code: string | null
+          status: string
+          subtotal: number
+          total: number
+          user_id: string | null
+        }
+        Insert: {
+          address?: string
+          created_at?: string
+          customer_name?: string
+          discount?: number
+          id?: string
+          items?: Json
+          note?: string | null
+          payment_method?: string
+          phone?: string
+          promo_code?: string | null
+          status?: string
+          subtotal?: number
+          total?: number
+          user_id?: string | null
+        }
+        Update: {
+          address?: string
+          created_at?: string
+          customer_name?: string
+          discount?: number
+          id?: string
+          items?: Json
+          note?: string | null
+          payment_method?: string
+          phone?: string
+          promo_code?: string | null
+          status?: string
+          subtotal?: number
+          total?: number
+          user_id?: string | null
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          address: string | null
+          avatar_url: string | null
+          created_at: string
+          full_name: string | null
+          id: string
+          phone: string | null
+        }
+        Insert: {
+          address?: string | null
+          avatar_url?: string | null
+          created_at?: string
+          full_name?: string | null
+          id: string
+          phone?: string | null
+        }
+        Update: {
+          address?: string | null
+          avatar_url?: string | null
+          created_at?: string
+          full_name?: string | null
+          id?: string
+          phone?: string | null
+        }
+        Relationships: []
+      }
+      promo_codes: {
+        Row: {
+          code: string
+          created_at: string
+          description: string
+          discount_type: string
+          discount_value: number
+          id: string
+          is_active: boolean
+          is_daily: boolean
+          title: string
+          valid_until: string | null
+        }
+        Insert: {
+          code: string
+          created_at?: string
+          description?: string
+          discount_type?: string
+          discount_value?: number
+          id?: string
+          is_active?: boolean
+          is_daily?: boolean
+          title?: string
+          valid_until?: string | null
+        }
+        Update: {
+          code?: string
+          created_at?: string
+          description?: string
+          discount_type?: string
+          discount_value?: number
+          id?: string
+          is_active?: boolean
+          is_daily?: boolean
+          title?: string
+          valid_until?: string | null
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
+      wishlist: {
+        Row: {
+          created_at: string
+          dish_id: string
+          id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          dish_id: string
+          id?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          dish_id?: string
+          id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "wishlist_dish_id_fkey"
+            columns: ["dish_id"]
+            isOneToOne: false
+            referencedRelation: "dishes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "user"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +355,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "user"],
+    },
   },
 } as const
