@@ -44,7 +44,6 @@ type Dish = {
   category: string;
   image_url: string | null;
   is_popular: boolean;
-  is_available: boolean;
 };
 
 type Promo = {
@@ -182,7 +181,7 @@ function AdminPage() {
       ? await supabase.from("dishes").update(payload).eq("id", dishEditId)
       : await supabase.from("dishes").insert(payload);
     setBusy(false);
-    if (error) return toast.error("Saqlab bo'lmadi");
+    if (error) { toast.error("Saqlab bo'lmadi"); return; }
     toast.success("Saqlandi");
     setDishForm({ ...emptyDish });
     setDishEditId(null);
@@ -193,7 +192,7 @@ function AdminPage() {
 
   const deleteDish = async (id: string) => {
     const { error } = await supabase.from("dishes").delete().eq("id", id);
-    if (error) return toast.error("O'chirib bo'lmadi");
+    if (error) { toast.error("O'chirib bo'lmadi");
     toast.success("O'chirildi");
     void qc.invalidateQueries({ queryKey: ["admin-dishes"] });
   };
@@ -210,7 +209,7 @@ function AdminPage() {
       ? await supabase.from("promo_codes").update(payload).eq("id", promoEditId)
       : await supabase.from("promo_codes").insert(payload);
     setBusy(false);
-    if (error) return toast.error("Saqlab bo'lmadi (kod takrorlanmasin)");
+    if (error) { toast.error("Saqlab bo'lmadi (kod takrorlanmasin)");
     toast.success("Saqlandi");
     setPromoForm({ ...emptyPromo });
     setPromoEditId(null);
@@ -220,14 +219,14 @@ function AdminPage() {
 
   const deletePromo = async (id: string) => {
     const { error } = await supabase.from("promo_codes").delete().eq("id", id);
-    if (error) return toast.error("O'chirib bo'lmadi");
+    if (error) { toast.error("O'chirib bo'lmadi");
     toast.success("O'chirildi");
     void qc.invalidateQueries({ queryKey: ["admin-promos"] });
   };
 
   const setStatus = async (id: string, status: string) => {
     const { error } = await supabase.from("orders").update({ status }).eq("id", id);
-    if (error) return toast.error("Yangilab bo'lmadi");
+    if (error) { toast.error("Yangilab bo'lmadi");
     void qc.invalidateQueries({ queryKey: ["admin-orders"] });
   };
 
