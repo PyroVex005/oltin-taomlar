@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as MenyuRouteImport } from './routes/menyu'
+import { Route as TaomIdRouteImport } from './routes/taom.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -22,31 +23,40 @@ const MenyuRoute = MenyuRouteImport.update({
   path: '/menyu',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TaomIdRoute = TaomIdRouteImport.update({
+  id: '/taom/$id',
+  path: '/taom/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/menyu': typeof MenyuRoute
+  '/taom/$id': typeof TaomIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/menyu': typeof MenyuRoute
+  '/taom/$id': typeof TaomIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/menyu': typeof MenyuRoute
+  '/taom/$id': typeof TaomIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/menyu'
+  fullPaths: '/' | '/menyu' | '/taom/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/menyu'
-  id: '__root__' | '/' | '/menyu'
+  to: '/' | '/menyu' | '/taom/$id'
+  id: '__root__' | '/' | '/menyu' | '/taom/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   MenyuRoute: typeof MenyuRoute
+  TaomIdRoute: typeof TaomIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -65,12 +75,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MenyuRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/taom/$id': {
+      id: '/taom/$id'
+      path: '/taom/$id'
+      fullPath: '/taom/$id'
+      preLoaderRoute: typeof TaomIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   MenyuRoute: MenyuRoute,
+  TaomIdRoute: TaomIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
