@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as CheckoutRouteImport } from './routes/checkout'
 import { Route as MenyuRouteImport } from './routes/menyu'
 import { Route as SavatRouteImport } from './routes/savat'
 import { Route as TaomIdRouteImport } from './routes/taom.$id'
@@ -17,6 +18,11 @@ import { Route as TaomIdRouteImport } from './routes/taom.$id'
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CheckoutRoute = CheckoutRouteImport.update({
+  id: '/checkout',
+  path: '/checkout',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MenyuRoute = MenyuRouteImport.update({
@@ -37,12 +43,14 @@ const TaomIdRoute = TaomIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/checkout': typeof CheckoutRoute
   '/menyu': typeof MenyuRoute
   '/savat': typeof SavatRoute
   '/taom/$id': typeof TaomIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/checkout': typeof CheckoutRoute
   '/menyu': typeof MenyuRoute
   '/savat': typeof SavatRoute
   '/taom/$id': typeof TaomIdRoute
@@ -50,20 +58,22 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/checkout': typeof CheckoutRoute
   '/menyu': typeof MenyuRoute
   '/savat': typeof SavatRoute
   '/taom/$id': typeof TaomIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/menyu' | '/savat' | '/taom/$id'
+  fullPaths: '/' | '/checkout' | '/menyu' | '/savat' | '/taom/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/menyu' | '/savat' | '/taom/$id'
-  id: '__root__' | '/' | '/menyu' | '/savat' | '/taom/$id'
+  to: '/' | '/checkout' | '/menyu' | '/savat' | '/taom/$id'
+  id: '__root__' | '/' | '/checkout' | '/menyu' | '/savat' | '/taom/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  CheckoutRoute: typeof CheckoutRoute
   MenyuRoute: typeof MenyuRoute
   SavatRoute: typeof SavatRoute
   TaomIdRoute: typeof TaomIdRoute
@@ -76,6 +86,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/checkout': {
+      id: '/checkout'
+      path: '/checkout'
+      fullPath: '/checkout'
+      preLoaderRoute: typeof CheckoutRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/menyu': {
@@ -104,6 +121,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  CheckoutRoute: CheckoutRoute,
   MenyuRoute: MenyuRoute,
   SavatRoute: SavatRoute,
   TaomIdRoute: TaomIdRoute,
