@@ -14,6 +14,7 @@ import { Route as AuthRouteImport } from './routes/auth'
 import { Route as CheckoutRouteImport } from './routes/checkout'
 import { Route as ChegirmalarRouteImport } from './routes/chegirmalar'
 import { Route as MenyuRouteImport } from './routes/menyu'
+import { Route as ProfilRouteImport } from './routes/profil'
 import { Route as SavatRouteImport } from './routes/savat'
 import { Route as TaomIdRouteImport } from './routes/taom.$id'
 
@@ -42,6 +43,11 @@ const MenyuRoute = MenyuRouteImport.update({
   path: '/menyu',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ProfilRoute = ProfilRouteImport.update({
+  id: '/profil',
+  path: '/profil',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SavatRoute = SavatRouteImport.update({
   id: '/savat',
   path: '/savat',
@@ -59,6 +65,7 @@ export interface FileRoutesByFullPath {
   '/checkout': typeof CheckoutRoute
   '/chegirmalar': typeof ChegirmalarRoute
   '/menyu': typeof MenyuRoute
+  '/profil': typeof ProfilRoute
   '/savat': typeof SavatRoute
   '/taom/$id': typeof TaomIdRoute
 }
@@ -68,6 +75,7 @@ export interface FileRoutesByTo {
   '/checkout': typeof CheckoutRoute
   '/chegirmalar': typeof ChegirmalarRoute
   '/menyu': typeof MenyuRoute
+  '/profil': typeof ProfilRoute
   '/savat': typeof SavatRoute
   '/taom/$id': typeof TaomIdRoute
 }
@@ -78,6 +86,7 @@ export interface FileRoutesById {
   '/checkout': typeof CheckoutRoute
   '/chegirmalar': typeof ChegirmalarRoute
   '/menyu': typeof MenyuRoute
+  '/profil': typeof ProfilRoute
   '/savat': typeof SavatRoute
   '/taom/$id': typeof TaomIdRoute
 }
@@ -89,6 +98,7 @@ export interface FileRouteTypes {
     | '/checkout'
     | '/chegirmalar'
     | '/menyu'
+    | '/profil'
     | '/savat'
     | '/taom/$id'
   fileRoutesByTo: FileRoutesByTo
@@ -98,6 +108,7 @@ export interface FileRouteTypes {
     | '/checkout'
     | '/chegirmalar'
     | '/menyu'
+    | '/profil'
     | '/savat'
     | '/taom/$id'
   id:
@@ -107,6 +118,7 @@ export interface FileRouteTypes {
     | '/checkout'
     | '/chegirmalar'
     | '/menyu'
+    | '/profil'
     | '/savat'
     | '/taom/$id'
   fileRoutesById: FileRoutesById
@@ -117,6 +129,7 @@ export interface RootRouteChildren {
   CheckoutRoute: typeof CheckoutRoute
   ChegirmalarRoute: typeof ChegirmalarRoute
   MenyuRoute: typeof MenyuRoute
+  ProfilRoute: typeof ProfilRoute
   SavatRoute: typeof SavatRoute
   TaomIdRoute: typeof TaomIdRoute
 }
@@ -158,6 +171,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MenyuRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/profil': {
+      id: '/profil'
+      path: '/profil'
+      fullPath: '/profil'
+      preLoaderRoute: typeof ProfilRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/savat': {
       id: '/savat'
       path: '/savat'
@@ -181,6 +201,7 @@ const rootRouteChildren: RootRouteChildren = {
   CheckoutRoute: CheckoutRoute,
   ChegirmalarRoute: ChegirmalarRoute,
   MenyuRoute: MenyuRoute,
+  ProfilRoute: ProfilRoute,
   SavatRoute: SavatRoute,
   TaomIdRoute: TaomIdRoute,
 }
